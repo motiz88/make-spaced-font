@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`makeSpacedFont throws if input doesn't exist 1`] = `[Error: File not found: SOME_FILE_THAT_DOES_NOT_EXIST]`;

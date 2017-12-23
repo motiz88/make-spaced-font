@@ -1,0 +1,7 @@
+*
+!src/**/*.js
+!.flowconfig
+**/__test__
+**/*.test.js
+**/*.test.snap
+**/*.ttf

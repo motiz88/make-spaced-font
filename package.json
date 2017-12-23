@@ -1,0 +1,34 @@
+{
+  "name": "make-spaced-font",
+  "version": "0.0.1",
+  "author": {
+    "email": "motiz88@gmail.com",
+    "name": "Moti Zilberman"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "css-length": "^1.0.3",
+    "fonttools": "^1.0.7",
+    "invariant": "^2.2.2",
+    "meow": "^4.0.0",
+    "xml-js": "^1.6.1"
+  },
+  "engines": {
+    "node": ">=8.5"
+  },
+  "main": "./src/index.js",
+  "bin": {
+    "make-spaced-font": "./src/cli.js"
+  },
+  "devDependencies": {
+    "flow-bin": "^0.61.0",
+    "if-env": "^1.0.0",
+    "jest": "^22.0.4",
+    "tmp-promise": "^1.0.4"
+  },
+  "scripts": {
+    "test": "if-env CI=true && npm run test:ci || npm run test:local",
+    "test:ci": "flow && jest --ci --coverage",
+    "test:local": "flow && jest"
+  }
+}
