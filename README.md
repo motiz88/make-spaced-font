@@ -1,5 +1,7 @@
 # make-spaced-font
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/motiz88/make-spaced-font.svg)](https://greenkeeper.io/)
+
 Generate letter-spaced variants of font files.
 
 _This is an experimental tool!_ Please exercise care when using it and report any issues.
