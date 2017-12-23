@@ -30,5 +30,9 @@
     "test": "if-env CI=true && npm run test:ci || npm run test:local",
     "test:ci": "flow && jest --ci --coverage",
     "test:local": "flow && jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/motiz88/make-spaced-font.git"
   }
 }
