@@ -7,10 +7,12 @@
   },
   "license": "MIT",
   "dependencies": {
+    "command-join": "^2.0.0",
     "css-length": "^1.0.3",
-    "fonttools": "^1.0.7",
     "invariant": "^2.2.2",
     "meow": "^4.0.0",
+    "nopy": "^0.2.4",
+    "tmp-promise": "^1.0.4",
     "xml-js": "^1.6.1"
   },
   "engines": {
@@ -23,16 +25,21 @@
   "devDependencies": {
     "flow-bin": "^0.61.0",
     "if-env": "^1.0.0",
-    "jest": "^22.0.4",
-    "tmp-promise": "^1.0.4"
+    "jest": "^22.0.4"
   },
   "scripts": {
     "test": "if-env CI=true && npm run test:ci || npm run test:local",
     "test:ci": "flow && jest --ci --coverage",
-    "test:local": "flow && jest"
+    "test:local": "flow && jest",
+    "install": "npip install"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/motiz88/make-spaced-font.git"
+  },
+  "python": {
+    "dependencies": {
+      "fonttools": ">=3.21"
+    }
   }
 }

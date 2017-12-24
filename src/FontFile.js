@@ -1,14 +1,19 @@
 /* @flow */
 
-const fonttools = require("fonttools").default;
 const { promisify } = require("util");
 const xmljs = require("xml-js");
 const fs = require("fs");
 const invariant = require("invariant");
 
+const nopenv = require.resolve(".bin/nopenv");
+
+const exec = promisify(require("child_process").exec);
 const readFile = promisify(fs.readFile);
 const writeFile = promisify(fs.writeFile);
-const { compile, decompile } = fonttools();
+const exists = promisify(fs.exists);
+const unlink = promisify(fs.unlink);
+const tmp = require("tmp-promise");
+const commandJoin = require("command-join");
 
 /*::
 type TransformOptions = {
@@ -28,15 +33,25 @@ module.exports = class FontFile {
   }
 
   async _load() {
-    if (!this._srcBin) {
-      this._srcBin = await readFile(this._inputPath);
-    }
+    invariant(
+      await exists(this._inputPath),
+      "File not found: " + this._inputPath
+    );
   }
 
   async _parse() {
     await this._load();
     if (!this._srcParsed) {
-      this._srcParsed = xmljs.xml2js(decompile(this._srcBin), {
+      const xml = (await exec(
+        commandJoin([nopenv, "ttx", "-o", "-", this._inputPath]),
+        {
+          cwd: __dirname + "/..",
+          encoding: "utf8",
+          maxBuffer: 1024 * 1024 * 5
+        }
+      )).stdout;
+
+      this._srcParsed = xmljs.xml2js(xml, {
         addParent: true
       });
     }
@@ -50,8 +65,12 @@ module.exports = class FontFile {
     await this._parse();
     const transformed = transformParsedFont(this._srcParsed, transformOptions);
     const transformedXml = xmljs.js2xml(transformed);
-    const compiled = compile(Buffer.from(transformedXml));
-    await writeFile(outputPath, compiled);
+    const xmlFile = await tmp.tmpName({ postfix: ".ttx" });
+    await writeFile(xmlFile, transformedXml, { encoding: "utf8" });
+    await exec(commandJoin([nopenv, "ttx", "-o", outputPath, xmlFile]), {
+      cwd: __dirname + "/.."
+    });
+    await unlink(xmlFile);
   }
 };
 
