@@ -19,7 +19,7 @@ All font types supported by [`fonttools`][fonttools] should work.
 
 ## Why?
 
-This is mostly useful when building apps for environments that lack runtime control over letter spacing; notably - and where my use case comes from - React Native (at the time of writing, v0.51) only supports the [`letterSpacing`][rn-letterspacing] style property on iOS, and [attempts][pr-1] [to][pr-2] [implement][pr-3] [it][pr-4] it for Android seem to have stalled.
+This is mostly useful when building apps for environments that lack runtime control over letter spacing; notably - and where my use case comes from - React Native (at the time of writing, v0.51) only supports the [`letterSpacing`][rn-letterspacing] style property on iOS, and [attempts][pr-1] [to][pr-2] [implement][pr-3] [it][pr-4] for Android seem to have stalled.
 
 [rn-letterspacing]: https://facebook.github.io/react-native/docs/text.html#style
 [pr-1]: https://github.com/facebook/react-native/pull/13877
