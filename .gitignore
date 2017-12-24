@@ -2,3 +2,4 @@ node_modules
 *.tgz
 fonts
 /*.ttf
+python_modules

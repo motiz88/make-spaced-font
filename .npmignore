@@ -5,3 +5,4 @@
 **/*.test.js
 **/*.test.snap
 **/*.ttf
+python_modules
