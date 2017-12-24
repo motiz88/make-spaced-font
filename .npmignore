@@ -6,3 +6,4 @@
 **/*.test.snap
 **/*.ttf
 python_modules
+coverage

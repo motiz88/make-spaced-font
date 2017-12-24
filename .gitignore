@@ -3,3 +3,4 @@ node_modules
 fonts
 /*.ttf
 python_modules
+coverage
