@@ -14,6 +14,7 @@ const exists = promisify(fs.exists);
 const unlink = promisify(fs.unlink);
 const tmp = require("tmp-promise");
 const commandJoin = require("command-join");
+const path = require("path");
 
 /*::
 type TransformOptions = {
@@ -43,7 +44,13 @@ module.exports = class FontFile {
     await this._load();
     if (!this._srcParsed) {
       const xml = (await exec(
-        commandJoin([nopenv, "ttx", "-o", "-", this._inputPath]),
+        commandJoin([
+          nopenv,
+          "ttx",
+          "-o",
+          "-",
+          path.resolve(process.cwd(), this._inputPath)
+        ]),
         {
           cwd: __dirname + "/..",
           encoding: "utf8",
@@ -67,9 +74,18 @@ module.exports = class FontFile {
     const transformedXml = xmljs.js2xml(transformed);
     const xmlFile = await tmp.tmpName({ postfix: ".ttx" });
     await writeFile(xmlFile, transformedXml, { encoding: "utf8" });
-    await exec(commandJoin([nopenv, "ttx", "-o", outputPath, xmlFile]), {
-      cwd: __dirname + "/.."
-    });
+    await exec(
+      commandJoin([
+        nopenv,
+        "ttx",
+        "-o",
+        path.resolve(process.cwd(), outputPath),
+        xmlFile
+      ]),
+      {
+        cwd: __dirname + "/.."
+      }
+    );
     await unlink(xmlFile);
   }
 };

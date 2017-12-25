@@ -1,4 +1,5 @@
 const fs = require("fs");
+const path = require("path");
 const tmp = require("tmp-promise");
 const { promisify } = require("util");
 const copyFile = promisify(fs.copyFile);
@@ -53,6 +54,19 @@ describe("makeSpacedFont", () => {
       outputFile,
       letterSpacing: "1px",
       baseFontSize: "12px"
+    });
+    expect(await exists(outputFile)).toBe(true);
+  });
+  test("relative paths work", async () => {
+    const inputFile = path.relative(process.cwd(), dir.path + "/s544b.ttf");
+    const outputFile = path.relative(
+      process.cwd(),
+      dir.path + "/s544b.out.ttf"
+    );
+    await makeSpacedFont({
+      inputFile,
+      outputFile,
+      letterSpacing: "1em"
     });
     expect(await exists(outputFile)).toBe(true);
   });
